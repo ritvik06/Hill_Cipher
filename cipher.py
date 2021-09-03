@@ -2,6 +2,8 @@ import numpy as np
 import math
 from sympy import Matrix
 
+ALPHABET_SIZE = 26
+
 #I/O function
 def init_and_preprocess():
 
@@ -57,7 +59,7 @@ def encrypt(input_matrix, key_matrix):
         encrypt_matrix[i] = np.squeeze(np.matmul(key_matrix, np.expand_dims(input_matrix[i], axis=1)))
     
     #Take modulo to create final encryption
-    encrypt_matrix = np.remainder(encrypt_matrix, 26)
+    encrypt_matrix = np.remainder(encrypt_matrix, ALPHABET_SIZE)
 
     #Convert encryption to string
     encrypt_string = ''
@@ -73,7 +75,7 @@ def encrypt(input_matrix, key_matrix):
 def decrypt(encrypt_matrix, key_matrix):
     
     #Takes inverse modulo of key matrix
-    key_inv_matrix = np.matrix(Matrix(key_matrix).inv_mod(26))
+    key_inv_matrix = np.matrix(Matrix(key_matrix).inv_mod(ALPHABET_SIZE))
 
     decrypt_matrix = np.zeros(encrypt_matrix.shape, dtype=np.int32)
 
@@ -81,7 +83,7 @@ def decrypt(encrypt_matrix, key_matrix):
         decrypt_matrix[i] = np.squeeze(np.matmul(key_inv_matrix, np.expand_dims(encrypt_matrix[i], axis=1)))
 
     #Take modulo to create final encryption
-    decrypt_matrix = np.remainder(decrypt_matrix, 26)
+    decrypt_matrix = np.remainder(decrypt_matrix, ALPHABET_SIZE)
 
     #Convert encryption to string
     decrypt_string = ''
