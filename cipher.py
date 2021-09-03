@@ -70,7 +70,6 @@ def encrypt(input_matrix, key_matrix):
     return encrypt_matrix, encrypt_string
 
 
-
 #This function decrypts the input message
 def decrypt(encrypt_matrix, key_matrix):
     
@@ -104,12 +103,12 @@ if __name__  == "__main__":
 
     encrypt_matrix, encrypt_string = encrypt(input_matrix, key_matrix)
 
-    print('String matrix after encryption : ', encrypt_matrix)
+    print('String matrix after encryption - \n', encrypt_matrix)
 
     print('Encrypted String : ', encrypt_string)
 
     decrypt_matrix, decrypt_string = decrypt(encrypt_matrix, key_matrix)
 
-    print('String matrix after decryption : ', decrypt_matrix)
+    print('String matrix after decryption - \n', decrypt_matrix)
 
     print('Decrypted String : ', decrypt_string)
