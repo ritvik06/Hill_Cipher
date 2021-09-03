@@ -68,6 +68,30 @@ def encrypt(input_matrix, key_matrix):
     return encrypt_matrix, encrypt_string
 
 
+
+#This function decrypts the input message
+def decrypt(encrypt_matrix, key_matrix):
+    
+    #Takes inverse modulo of key matrix
+    key_inv_matrix = np.matrix(Matrix(key_matrix).inv_mod(26))
+
+    decrypt_matrix = np.zeros(encrypt_matrix.shape, dtype=np.int32)
+
+    for i in range(len(encrypt_matrix)):
+        decrypt_matrix[i] = np.squeeze(np.matmul(key_inv_matrix, np.expand_dims(encrypt_matrix[i], axis=1)))
+
+    #Take modulo to create final encryption
+    decrypt_matrix = np.remainder(decrypt_matrix, 26)
+
+    #Convert encryption to string
+    decrypt_string = ''
+
+    for decrypt_sub_matrix in decrypt_matrix:
+        decrypt_string += ''.join([chr(x+65) for x in decrypt_sub_matrix])
+
+    return decrypt_matrix, decrypt_string
+
+
 if __name__  == "__main__":
 
     input_key, input_vec = init_and_preprocess()
@@ -81,3 +105,9 @@ if __name__  == "__main__":
     print('String matrix after encryption : ', encrypt_matrix)
 
     print('Encrypted String : ', encrypt_string)
+
+    decrypt_matrix, decrypt_string = decrypt(encrypt_matrix, key_matrix)
+
+    print('String matrix after decryption : ', decrypt_matrix)
+
+    print('Decrypted String : ', decrypt_string)
