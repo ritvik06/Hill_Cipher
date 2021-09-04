@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import math
 from sympy import Matrix
@@ -7,16 +8,16 @@ ALPHABET_SIZE = 26
 #I/O function
 def init_and_preprocess():
 
-    str_input = str(input("Enter your input in Plain Text : "))
-    str_key = str(input("Enter your key in Plain Text : "))
+    str_input = str(input("Enter your input in Plain Text : ")).lower()
+    str_key = str(input("Enter your key in Plain Text : ")).lower()
 
     #todo - Remove all characters other than A-Z
     str_input = "".join(str_input.split())
     str_key = "".join(str_key.split())
 
     # Convert input & key to vector A - Z -> 0 - 25
-    input_vec = [(ord(char_input) - 65) for char_input in str_input]
-    input_key  = [(ord(char_key) - 65) for char_key in str_key]
+    input_vec = [(ord(char_input) - 97) for char_input in str_input]
+    input_key  = [(ord(char_key) - 97) for char_key in str_key]
 
     return np.asarray(input_key), np.asarray(input_vec)
 
@@ -65,7 +66,7 @@ def encrypt(input_matrix, key_matrix):
     encrypt_string = ''
 
     for encrypt_sub_matrix in encrypt_matrix:
-        encrypt_string += ''.join([chr(x+65) for x in encrypt_sub_matrix])
+        encrypt_string += ''.join([chr(x+97) for x in encrypt_sub_matrix])
 
     return encrypt_matrix, encrypt_string
 
@@ -88,7 +89,40 @@ def decrypt(encrypt_matrix, key_matrix):
     decrypt_string = ''
 
     for decrypt_sub_matrix in decrypt_matrix:
-        decrypt_string += ''.join([chr(x+65) for x in decrypt_sub_matrix])
+        decrypt_string += ''.join([chr(x+97) for x in decrypt_sub_matrix])
+
+    return decrypt_matrix, decrypt_string
+
+
+#An alternate implementation for decrypt, inv modulo by first principles
+def decrypt_alt(encrypt_matrix, key_matrix):
+
+    #Find determinant of key
+    det = int(np.linalg.det(key_matrix))
+
+    #Find inverse of det, if it exists!
+    try:
+        inv_det = pow(det, -1, ALPHABET_SIZE)
+    except:
+        print('Inverse of determinant doesn\'t exist')
+        sys.exit(0)
+
+    #Inverse modulo of key
+    key_inv_matrix = np.int_(inv_det * ((np.linalg.inv(key_matrix)) * det))
+
+    decrypt_matrix = np.zeros(encrypt_matrix.shape, dtype=np.int32)
+
+    for i in range(len(encrypt_matrix)):
+        decrypt_matrix[i] = np.squeeze(np.matmul(key_inv_matrix, np.expand_dims(encrypt_matrix[i], axis=1)))
+
+    #Take modulo to create final encryption
+    decrypt_matrix = np.remainder(decrypt_matrix, ALPHABET_SIZE)
+
+    #Convert encryption to string
+    decrypt_string = ''
+
+    for decrypt_sub_matrix in decrypt_matrix:
+        decrypt_string += ''.join([chr(x+97) for x in decrypt_sub_matrix])
 
     return decrypt_matrix, decrypt_string
 
@@ -107,7 +141,7 @@ if __name__  == "__main__":
 
     print('Encrypted String : ', encrypt_string)
 
-    decrypt_matrix, decrypt_string = decrypt(encrypt_matrix, key_matrix)
+    decrypt_matrix, decrypt_string = decrypt_alt(encrypt_matrix, key_matrix)
 
     print('String matrix after decryption - \n', decrypt_matrix)
 
