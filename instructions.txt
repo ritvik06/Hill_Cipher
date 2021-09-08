@@ -1,3 +1,14 @@
+(a) Code-Flow
+
+The code consists of three main python scripts - utils.py, cipher.py and cryptanalysis.py
+	
+	- utils.py - this contains helper functions to compute matrix modulo inverse
+	- cipher.py - this contains code for part (a), i.e. encryption and decryption using hill-cipher
+	- cryptanalysis.py - this contains code for part (b), i.e. cryptanalysis for hill-cipher using different key-sized and index of coincidence
+
+
+(b) Instructions to run code
+
 ####### PART-A #######
 
 Choice A :
