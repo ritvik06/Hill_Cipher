@@ -1,0 +1,22 @@
+####### PART-A #######
+
+Choice A :
+ $ python cipher.py $location of input plain text$ $location of input key$
+ 
+Choice B : 
+ $ python cipher.py
+	- enter input string given prompt
+	- enter key string given prompt
+
+
+####### PART-B #######
+
+Choice A :
+ $ python cryptanalysis.py $location of plain text$ $location of cipher text$
+
+Choice B :
+ $ python cipher.py
+	- enter input text
+	-enter the whole cipher text
+
+
