@@ -1,21 +1,11 @@
-# Code for finding inverse modulo sourced and modified from http://stackoverflow.com/questions/4287721/easiest-way-to-perform-modular-matrix-inversion-with-python#answer-4293123
-
+# Code for finding inverse modulo sourced and modified from https://github.com/ctfs/write-ups-2015/blob/master/ghost-in-the-shellcode-2015/crypto/nikoli/hilly.py
 import numpy as np
 
+
 # Return matrix A with the ith row and jth column deleted
-def minor(A,i,j):    
-	A=np.array(A)
-	minor=np.zeros(shape=(len(A)-1,len(A)-1))
-	p=0
-	for s in range(0,len(minor)):
-		if p==i: p=p+1
-		q=0
-		for t in range(0,len(minor)):
-			if q==j: q=q+1
-			minor[s][t]=A[p][q]
-			q=q+1
-		p=p+1
-	return minor
+def minor(A,i,j):
+    return A[np.array(list(range(i))+list(range(i+1,A.shape[0])))[:,np.newaxis],
+               np.array(list(range(j))+list(range(j+1,A.shape[1])))]
 
 # Finds the inverse of a mod p, if it exists
 def modInv(a,p):          
@@ -27,7 +17,6 @@ def modInv(a,p):
 # Finds the inverse of matrix A mod p
 def modMatInv(A,p):       
 	n=len(A)
-	A=np.matrix(A)
 	adj=np.zeros(shape=(n,n))
 	for i in range(0,n):
 		for j in range(0,n):
