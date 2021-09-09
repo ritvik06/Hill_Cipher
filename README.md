@@ -6,9 +6,9 @@ Python 3.6+
 
 pip install -r requirements.txt
 
-## Usage
+## 1. Usage - Encryption and Decryption
 
-python cipher.py
+python src/cipher.py $loc. of input text$ $loc. of key text$
 
 ## Sample Input
 
@@ -25,4 +25,15 @@ String matrix after decryption -  [[ 0  2  4]
  [ 5 19  7]] \
 Decrypted String :  ACEFTH
 
+## 2. Usage - Cryptanalysis
 
+python src/cryptanalysis.py $loc. of input text$ $loc. of cipher text$
+
+## Sample Output
+
+Key Size : 3 ; Best Index of Coincidence : 0.06983
+
+Best Key - \
+ \[[ 2.  4.  5.] \
+ [ 9.  2.  1.] \
+ [ 3. 17.  7.]] 
