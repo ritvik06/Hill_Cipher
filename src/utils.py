@@ -1,7 +1,6 @@
 # Code for finding inverse modulo sourced and modified from https://github.com/ctfs/write-ups-2015/blob/master/ghost-in-the-shellcode-2015/crypto/nikoli/hilly.py
 import numpy as np
 
-
 # Return matrix A with the ith row and jth column deleted
 def minor(A,i,j):
     return A[np.array(list(range(i))+list(range(i+1,A.shape[0])))[:,np.newaxis],
